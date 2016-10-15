@@ -21,7 +21,6 @@ public class Topic {
 	}
 	
 	public Topic(String fileName) {
-		_name = fileName;
 		readFromFile(fileName);
 	}
 	
@@ -56,10 +55,6 @@ public class Topic {
 	
 	public void addMistakesList(WordList mistakes) { 
 		_mistakes = mistakes;
-	}
-	
-	public void setName(String name) {
-		_name = name;
 	}
 	
 	/*

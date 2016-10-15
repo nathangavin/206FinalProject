@@ -58,10 +58,6 @@ public class Topic {
 		_mistakes = mistakes;
 	}
 	
-	public void setName(String name) {
-		_name = name;
-	}
-	
 	/*
 	private void readFromFile(String fileName) {
 		File file = new File(fileName);
