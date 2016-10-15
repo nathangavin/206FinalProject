@@ -1,0 +1,20 @@
+package voxSpell.GUI;
+
+import java.awt.event.ActionEvent;
+
+import javax.swing.JFrame;
+
+public class NewUser extends GUIElement {
+	
+	
+
+	protected NewUser(JFrame frame) {
+		super(frame);
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		
+	}
+
+}
