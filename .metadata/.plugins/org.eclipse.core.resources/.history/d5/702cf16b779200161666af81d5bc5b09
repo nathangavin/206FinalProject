@@ -22,7 +22,6 @@ public class TitleScreen extends GUIElement {
 		setLayout(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
 		c.weightx = 0.5;
-		c.weighty = 0.5;
 		
 		c.gridx = 0;
 		c.gridy = 0;
@@ -32,20 +31,18 @@ public class TitleScreen extends GUIElement {
 		
 		c.gridx = 1;
 		c.gridy = 1;
-		c.weighty = 1;
 		c.gridwidth = 2;
 		_titleSecondary.setFont(new Font("Garamond", Font.PLAIN, 14));
 		add(_titleSecondary, c);
 		
 		c.gridy = 2;
-		c.weighty = 0.5;
 		c.gridwidth = 1;
-		_login.addActionListener(this);
 		add(_login, c);
 		
 		c.gridx = 2;
-		_newUser.addActionListener(this);
 		add(_newUser, c);
+		
+		
 		
 	}
 

@@ -40,11 +40,9 @@ public class TitleScreen extends GUIElement {
 		c.gridy = 2;
 		c.weighty = 0.5;
 		c.gridwidth = 1;
-		_login.addActionListener(this);
 		add(_login, c);
 		
 		c.gridx = 2;
-		_newUser.addActionListener(this);
 		add(_newUser, c);
 		
 	}

@@ -6,8 +6,6 @@ import java.awt.event.WindowEvent;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 
-import voxSpell.GUI.TitleScreen;
-
 public class voxSpell extends JFrame {
 
 	public voxSpell() {
@@ -18,7 +16,7 @@ public class voxSpell extends JFrame {
 			
 		setSize(900, 700);
 		setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);	
-		add(new TitleScreen(this));
+		//add(new TitleScreen(this, _data));
 		
 		addWindowListener(new WindowAdapter() {
 			public void windowClosing(WindowEvent e) {
