@@ -1,0 +1,7 @@
+package voxSpell;
+
+import javax.swing.JFrame;
+
+public class voxSpell extends JFrame {
+
+}

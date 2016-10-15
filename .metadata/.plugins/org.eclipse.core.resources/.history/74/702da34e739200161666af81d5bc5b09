@@ -1,0 +1,7 @@
+package voxSpell.data;
+
+public class Topic {
+
+	private String _name - "";
+	
+}

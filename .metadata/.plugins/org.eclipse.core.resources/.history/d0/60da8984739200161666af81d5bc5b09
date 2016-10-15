@@ -1,0 +1,8 @@
+package voxSpell.data;
+
+public class UserData {
+
+	private String _name = "";
+	
+	
+}

@@ -1,0 +1,8 @@
+package voxSpell.data;
+
+public class Topic {
+
+	private String _name = "";
+	private ArrayList<WordList> _wordlists = new ArrayList<WordList>();
+	
+}

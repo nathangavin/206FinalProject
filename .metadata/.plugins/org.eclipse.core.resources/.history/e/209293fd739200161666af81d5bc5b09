@@ -1,0 +1,7 @@
+package voxSpell.GUI;
+
+import javax.swing.JPanel;
+
+public class TitleScreen extends JPanel {
+
+}
