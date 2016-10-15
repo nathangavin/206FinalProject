@@ -1,0 +1,5 @@
+package voxSpell.GUI;
+
+public class TestScreen extends GUIElement {
+
+}

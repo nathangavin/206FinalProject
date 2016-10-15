@@ -10,9 +10,8 @@ package voxSpell.data;
 public class Word{
 
 	private String _word;
-	private int _mastered;
-	private int _faulted;
-	private int _failed;
+	private int _attempts;
+	private int _timesCorrect;
 	
 	//constructor for a new word without history
 	public Word(String word){
@@ -20,30 +19,26 @@ public class Word{
 	}
 	
 	//constructor for a word that has history
-	public Word(String word, int mastered, int faulted, int failed){
+	public Word(String word, int attempts, int timesCorrect){
 		_word = word;
-		_mastered = mastered;
-		_faulted = faulted;
-		_failed = failed;
+		_attempts = attempts;
+		_timesCorrect = timesCorrect;
 	}
 	
 	//method to increment a mastery value in a word, classes
 	//that use this method use the final variables in the AbstractMenu class
 	public void increment(int value){
 		if(value == 0){
-			_mastered += 1;
-		} else if(value == 1){
-			_faulted += 1;
-		} else if(value == 2){
-			_failed += 1;
+			_attempts += 1;
+		} else {
+			_timesCorrect += 1;
 		}
 	}
 	
 	//method to reset a word's statistics, for the clearStats option
 	public void reset(){
-		_mastered = 0;
-		_faulted = 0;
-		_failed = 0;
+		_attempts = 0;
+		_timesCorrect = 0;
 	}
 
 	//method used by TableValues, to get values for the stats table
@@ -52,11 +47,9 @@ public class Word{
 		case 0:
 			return _word;
 		case 1:
-			return _mastered;
+			return _attempts;
 		case 2:
-			return _faulted;
-		case 3:
-			return _failed;
+			return _timesCorrect;
 		}
 		return 0;
 	}
@@ -68,7 +61,7 @@ public class Word{
 	
 	//toString method used for the save utility
 	public String toString(){
-		return _word + " " + _mastered + " " + _faulted + " " + _failed;
+		return _word + " " + _attempts + " " + _timesCorrect;
 	}
 
 	//override equals used for part of the loading. we only care about the value within the word variable(in this case)
