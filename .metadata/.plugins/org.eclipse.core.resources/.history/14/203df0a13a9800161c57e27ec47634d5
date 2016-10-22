@@ -1,0 +1,28 @@
+package voxSpell.GUI;
+
+import java.awt.event.ActionEvent;
+
+import javax.swing.JComboBox;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+
+import voxSpell.data.UserData;
+
+public class LevelSelect extends UserGUIElement {
+	
+	private JComboBox _topics;
+	private JComboBox _levels;
+	private JLabel _title = new JLabel("Level Select");
+	private JButton _selectTopic = new JButton("Select");
+	private JButton _selectLevel = new JButton("Select");
+
+	protected LevelSelect(JFrame frame, UserData user) {
+		super(frame, user);
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		
+	}
+
+}

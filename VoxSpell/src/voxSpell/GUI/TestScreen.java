@@ -5,12 +5,15 @@ import java.awt.event.ActionEvent;
 import javax.swing.JFrame;
 
 import voxSpell.data.UserData;
+import voxSpell.data.WordList;
 
 public class TestScreen extends UserGUIElement {
 
-	protected TestScreen(JFrame frame, UserData user) {
+	private WordList _list;
+	
+	protected TestScreen(JFrame frame, UserData user, WordList list) {
 		super(frame, user);
-		// TODO Auto-generated constructor stub
+		_list = list;
 	}
 
 	@Override

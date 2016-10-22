@@ -8,6 +8,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import voxSpell.Exceptions.NoSuchTopicException;
+import voxSpell.Exceptions.WrongFileFormatException;
+
 public class UserData {
 
 	private String _name = "";
@@ -30,16 +33,26 @@ public class UserData {
 	public String getName() {
 		return _name;
 	}
-	
+
 	public void setName(String name) {
 		_name = name;
 	}
 
-	
+
 	public int getScore() {
 		return _score;
 	}
-	
+
+	public Topic getTopic(String topicName) throws NoSuchTopicException {
+		for (Topic x : _topics) {
+			if (topicName.equals(x.getName())) {
+				return x;
+			}
+		}
+
+		throw new NoSuchTopicException();
+	}
+
 	private void readFile() {
 		String fileName = "." + _name + ".Data";
 		File f = new File(fileName);
@@ -55,7 +68,10 @@ public class UserData {
 				String score = file.nextLine();
 				_score = Integer.parseInt(score);
 
-				Topic var = new Topic(file.nextLine().substring(1));
+				Topic var;
+
+				var = new Topic(file.nextLine().substring(1));
+
 				WordList var1 = null;
 
 				while (file.hasNextLine()) {
@@ -79,7 +95,7 @@ public class UserData {
 					}
 				}
 			}
-			
+
 			file.close();
 		} else {
 			try {
@@ -103,7 +119,7 @@ public class UserData {
 		}
 
 		addToFile("hello");
-		
+
 		String scoreString = "" + _score;
 		addToFile(scoreString);
 		for (Topic var : _topics) {
@@ -124,5 +140,13 @@ public class UserData {
 			e.printStackTrace();
 		}
 
+	}
+
+	public String[] getTopicNames() {
+		String[] names = new String[_topics.size()];
+		for (int i = 0; i < _topics.size(); i++) {
+			names[i] = _topics.get(i).getName();
+		}
+		return names;
 	}
 }

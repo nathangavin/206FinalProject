@@ -8,6 +8,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import voxSpell.Exceptions.NoSuchUserException;
+
 public class Users {
 
 	private ArrayList<UserData> _users = new ArrayList<UserData>();
@@ -78,14 +80,14 @@ public class Users {
 		_users.add(user);
 	}
 	
-	public UserData getAUser(String userName) {
+	public UserData getAUser(String userName) throws NoSuchUserException {
 		for (UserData user : _users) {
 			if (userName.equals(user.getName())) {
 				return user;
 			}
 		}
 		
-		return null;
+		throw new NoSuchUserException();
 	}
 	
 	public String[] getUserNames() {

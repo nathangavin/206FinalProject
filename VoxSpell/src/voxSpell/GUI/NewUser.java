@@ -22,16 +22,16 @@ public class NewUser extends AdminGUIElement {
 	private JLabel _title = new JLabel("New User");
 	private JLabel _name = new JLabel("Username:");
 	private JTextField _input = new JTextField("Enter Username Here ");
-	private JButton _createUser = new JButton("Create User");
+	private JButton _createUser = new JButton("Create");
 	private JLabel _warning = new JLabel("Please enter a valid username");
-	private JButton _goBack = new JButton("go back");
+	private JButton _goBack = new JButton("<");
 
 	public NewUser(JFrame frame, Users users) {
 		super(frame, users);
 		
 		GridBagLayout layout = new GridBagLayout();
 		layout.columnWidths = new int[] {133, 154, 180, 133};
-		layout.rowHeights = new int[] {121, 28, 36, 36, 21, 21, 29, 207};
+		layout.rowHeights = new int[] {121, 28, 36, 36, 21, 21, 60, 176};
 		setLayout(layout);
 		GridBagConstraints c = new GridBagConstraints();
 		
@@ -41,7 +41,7 @@ public class NewUser extends AdminGUIElement {
 		c.gridx = 0;
 		c.gridy = 1;
 		c.gridwidth = 4;
-		_title.setFont(new Font("Garamond", Font.PLAIN, 30));
+		_title.setFont(new Font("Garamond", Font.PLAIN, 40));
 		add(_title, c);
 		
 		c.gridy = 3;
@@ -49,6 +49,7 @@ public class NewUser extends AdminGUIElement {
 		c.gridwidth = 1;
 		c.weightx = 1;
 		c.anchor = c.EAST;
+		_name.setFont(new Font("Garamond", Font.PLAIN, 20));
 		add(_name, c);
 		
 		c.gridx = 2;
@@ -74,10 +75,14 @@ public class NewUser extends AdminGUIElement {
 		c.anchor = c.CENTER;
 		c.ipadx = 30;
 		_goBack.addActionListener(this);
+		_goBack.setPreferredSize(new Dimension(180, 50));
+		_goBack.setFont(new Font("Garamond", Font.BOLD, 20));
 		add(_goBack, c);
 		
 		c.gridx = 2;
 		_createUser.addActionListener(this);
+		_createUser.setPreferredSize(new Dimension(180, 50));
+		_createUser.setFont(new Font("Garamond", Font.PLAIN, 20));
 		add(_createUser, c);
 		
 		c.gridx = 1;
@@ -86,6 +91,7 @@ public class NewUser extends AdminGUIElement {
 		_warning.setOpaque(true);
 		_warning.setBackground(Color.RED);
 		_warning.setForeground(Color.WHITE);
+		_warning.setFont(new Font("Garamond", Font.PLAIN, 20));
 		add(_warning, c);
 		_warning.setVisible(false);
 	}
@@ -103,6 +109,7 @@ public class NewUser extends AdminGUIElement {
 				_warning.setVisible(true);
 			} else {
 				UserData user = new UserData(_input.getText());
+				Topic topic = new Topic();
 				_users.addAUser(user);
 				_GUI.getContentPane().removeAll();
 				_GUI.add(new UserMenu(_GUI, user));

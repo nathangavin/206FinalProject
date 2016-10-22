@@ -9,6 +9,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import voxSpell.Exceptions.NoSuchWordListException;
+import voxSpell.Exceptions.WrongFileFormatException;
+
 public class Topic {
 
 	private String _name = "";
@@ -16,15 +19,20 @@ public class Topic {
 	private String _currentLevel;
 	private WordList _mistakes = new WordList("mistakes");
 
-	public Topic() {
-		
-	}
-	
 	public Topic(String name) {
 		_name = name;
 	}
 	
-	private void readFromFile(String fileName) {
+	public Topic() throws WrongFileFormatException {
+		_name = "NZCER-spelling-lists";
+		readFromFile("NZCER-spelling-lists.txt");
+	}
+
+	public String getName() {
+		return _name;
+	}
+	
+	public void readFromFile(String fileName) throws WrongFileFormatException {
 		File file = new File(fileName);
 		if (file.isFile()) {
 			Scanner scanFile = null;
@@ -32,6 +40,10 @@ public class Topic {
 				scanFile = new Scanner(file);
 			} catch (FileNotFoundException e) {
 				e.printStackTrace();
+			}
+			
+			if (!scanFile.hasNextLine()) {
+				throw new WrongFileFormatException();
 			}
 			
 			WordList var = new WordList(scanFile.nextLine().substring(1));
@@ -77,14 +89,15 @@ public class Topic {
 	/** This method gets a WordList object matching the name of the 
 	 *  String parameter.
 	 *  returns null if no list is stored.
+	 * @throws NoSuchWordListException 
 	 */
-	public WordList getList(String listName) {
+	public WordList getList(String listName) throws NoSuchWordListException {
 		for (WordList var : _wordLists) {
 			if (var.getName().equals(listName)) {
 				return var;
 			}
 		}
-		return null;
+		throw new NoSuchWordListException();
 	}
 
 	/** This method returns an array of Strings representing the level names 

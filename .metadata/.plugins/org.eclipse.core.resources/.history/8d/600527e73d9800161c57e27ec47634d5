@@ -1,0 +1,59 @@
+package voxSpell.GUI;
+
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.event.ActionEvent;
+
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+
+import voxSpell.data.Topic;
+import voxSpell.data.UserData;
+
+public class LevelSelect extends UserGUIElement {
+	
+	private JComboBox<String> _topics;
+	private JComboBox<String> _levels = new JComboBox<String>();
+	private JLabel _title = new JLabel("Level Select");
+	private JButton _selectTopic = new JButton("Select");
+	private JButton _selectLevel = new JButton("Begin Level");
+	private JButton _goBack = new JButton("<");
+	private JLabel _topicLabel = new JLabel("Topics:");
+	private JLabel _levelLabel = new JLabel("Levels:");
+	
+
+	protected LevelSelect(JFrame frame, UserData user) {
+		super(frame, user);
+		
+		_topics = new JComboBox<String>(user.getTopicNames());
+		
+		GridBagLayout layout = new GridBagLayout();
+		layout.columnWidths = new int[] {60, 120, 200, 200};
+		layout.rowHeights = new int[] {60, 100, 60, 60, 60, 160};
+		setLayout(layout);
+		
+		GridBagConstraints c = new GridBagConstraints();
+		c.weightx = 0.5;
+		c.weighty = 0.5;
+		
+		c.gridx = 0;
+		c.gridy = 0;
+		_goBack.addActionListener(this);
+		add(_goBack, c);
+		
+		
+		
+		
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		if (e.getSource().equals(_selectTopic)) {
+			Topic topic = _user.getTopic(_topics.getSelectedItem().toString());
+			_levels = new JComboBox<String>()
+		}
+	}
+
+}

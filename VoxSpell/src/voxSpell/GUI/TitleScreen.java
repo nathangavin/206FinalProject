@@ -18,8 +18,8 @@ public class TitleScreen extends AdminGUIElement {
 	
 	private JLabel _titlePrimary = new JLabel("Welcome to VoxSpell");
 	private JLabel _titleSecondary = new JLabel("The Spelling Aid");
-	private JButton _login = new JButton("Login to existing user");
-	private JButton _newUser = new JButton("Create new user");
+	private JButton _login = new JButton("Login");
+	private JButton _newUser = new JButton("New User");
 
 	public TitleScreen(JFrame frame, Users users) {
 		super(frame, users);
@@ -44,15 +44,17 @@ public class TitleScreen extends AdminGUIElement {
 		_titleSecondary.setFont(new Font("Garamond", Font.PLAIN, 20));
 		add(_titleSecondary, c);
 		
-		c.gridy = 5;
+		c.gridy = 4;
 		c.weighty = 0.5;
 		c.gridwidth = 2;
 		_login.addActionListener(this);
+		_login.setFont(new Font("Garamond", Font.PLAIN, 20));
 		_login.setPreferredSize(new Dimension(200, 80));
 		add(_login, c);
 		
-		c.gridy = 4;
+		c.gridy = 5;
 		_newUser.addActionListener(this);
+		_newUser.setFont(new Font("Garamond", Font.PLAIN, 20));
 		_newUser.setPreferredSize(new Dimension(200, 80));
 		add(_newUser, c);
 		

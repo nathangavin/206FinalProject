@@ -1,0 +1,45 @@
+package voxSpell.GUI;
+
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.event.ActionEvent;
+
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+
+import voxSpell.data.UserData;
+
+public class LevelSelect extends UserGUIElement {
+	
+	private JComboBox _topics;
+	private JComboBox _levels;
+	private JLabel _title = new JLabel("Level Select");
+	private JButton _selectTopic = new JButton("Select");
+	private JButton _selectLevel = new JButton("Select");
+	private JLabel _topicLabel = new JLabel("Topics:");
+	private JLabel _levelLabel = new JLabel("Levels:");
+
+	protected LevelSelect(JFrame frame, UserData user) {
+		super(frame, user);
+		
+		GridBagLayout layout = new GridBagLayout();
+		layout.columnWidths = new int[] {};
+		layout.rowHeights = new int[] {};
+		setLayout(layout);
+		
+		GridBagConstraints c = new GridBagConstraints();
+		c.weightx = 0.5;
+		c.weighty = 0.5;
+		
+		
+		
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		
+	}
+
+}
