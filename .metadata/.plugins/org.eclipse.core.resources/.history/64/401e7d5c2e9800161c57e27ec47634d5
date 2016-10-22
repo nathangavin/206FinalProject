@@ -12,7 +12,7 @@ public class UserData {
 
 	private String _name = "";
 	private ArrayList<Topic> _topics = new ArrayList<Topic>();
-	private int _score = 0;
+	private int _score = 775;
 
 	public UserData(String userName) {
 		_name = userName;
@@ -35,11 +35,6 @@ public class UserData {
 		_name = name;
 	}
 
-	
-	public int getScore() {
-		return _score;
-	}
-	
 	private void readFile() {
 		String fileName = "." + _name + ".Data";
 		File f = new File(fileName);

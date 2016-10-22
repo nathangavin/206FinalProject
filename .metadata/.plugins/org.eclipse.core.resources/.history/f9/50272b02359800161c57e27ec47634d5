@@ -42,7 +42,7 @@ public class UserMenu extends UserGUIElement {
 		
 		c.gridx = 0;
 		c.gridy = 0;
-		_score.setFont(new Font("Garamond", Font.BOLD, 14));
+		_score.setFont(new Font("Garamond", Font.PLAIN, 12));
 		add(_score, c);
 
 		c.gridy = 1;
@@ -59,7 +59,7 @@ public class UserMenu extends UserGUIElement {
 			JButton current = buttons[i];
 			c.gridy = i + 2;
 			current.addActionListener(this);
-			current.setPreferredSize(new Dimension(180,30));
+			current.setPreferredSize(new Dimension(200,30));
 			add(current,c);
 		}
 
