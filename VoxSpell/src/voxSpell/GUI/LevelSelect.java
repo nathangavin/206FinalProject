@@ -4,16 +4,16 @@ import java.awt.event.ActionEvent;
 
 import javax.swing.JFrame;
 
-public class LevelSelect extends GUIElement {
+import voxSpell.data.UserData;
 
-	protected LevelSelect(JFrame frame) {
-		super(frame);
-		// TODO Auto-generated constructor stub
+public class LevelSelect extends UserGUIElement {
+
+	protected LevelSelect(JFrame frame, UserData user) {
+		super(frame, user);
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
 		
 	}
 

@@ -1,0 +1,33 @@
+package voxSpell.GUI;
+
+import java.awt.event.ActionEvent;
+
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+
+import voxSpell.data.Users;
+
+public class LoginScreen extends GUIElement {
+	
+	private JComboBox<String> _userSelector;
+	private JButton _goBack = new JButton("Go Back");
+	private JButton _Select = new JButton("Select");
+	private JLabel _title = new JLabel("Select a User");
+
+	protected LoginScreen(JFrame frame, Users users) {
+		super(frame, users);
+		_userSelector = new JComboBox<String>(_users.getUserNames());
+		
+		GridBagLayout layout = new GirdBagLayout();
+		
+		
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		
+	}
+
+}

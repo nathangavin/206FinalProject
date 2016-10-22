@@ -4,10 +4,12 @@ import java.awt.event.ActionEvent;
 
 import javax.swing.JFrame;
 
-public class CompletionScreen extends GUIElement {
+import voxSpell.data.UserData;
 
-	protected CompletionScreen(JFrame frame) {
-		super(frame);
+public class CompletionScreen extends UserGUIElement {
+
+	protected CompletionScreen(JFrame frame, UserData user) {
+		super(frame, user);
 		// TODO Auto-generated constructor stub
 	}
 

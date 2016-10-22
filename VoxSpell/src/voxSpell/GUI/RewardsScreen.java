@@ -4,10 +4,12 @@ import java.awt.event.ActionEvent;
 
 import javax.swing.JFrame;
 
-public class RewardsScreen extends GUIElement {
+import voxSpell.data.UserData;
 
-	protected RewardsScreen(JFrame frame) {
-		super(frame);
+public class RewardsScreen extends UserGUIElement {
+
+	protected RewardsScreen(JFrame frame, UserData user) {
+		super(frame, user);
 		// TODO Auto-generated constructor stub
 	}
 

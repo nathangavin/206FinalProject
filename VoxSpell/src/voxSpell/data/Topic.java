@@ -20,9 +20,8 @@ public class Topic {
 		
 	}
 	
-	public Topic(String fileName) {
-		_name = fileName;
-		readFromFile(fileName);
+	public Topic(String name) {
+		_name = name;
 	}
 	
 	private void readFromFile(String fileName) {
@@ -62,73 +61,6 @@ public class Topic {
 		_name = name;
 	}
 	
-	/*
-	private void readFromFile(String fileName) {
-		File file = new File(fileName);
-		if (file.isFile()) {
-			Scanner scanFile = null;
-			try {
-				scanFile = new Scanner(file);
-			} catch (FileNotFoundException e) {
-				e.printStackTrace();
-			}
-
-			if (scanFile.hasNextLine()) {
-
-				_currentLevel = scanFile.nextLine();
-
-				WordList var = new WordList(scanFile.nextLine().substring(1));
-
-				while (scanFile.hasNextLine()) {
-					String line = scanFile.nextLine();
-					if (line.equals("%mistakes")) {
-						while (scanFile.hasNextLine()) {
-							line = scanFile.nextLine();
-							if (line.startsWith("%")) {
-								var = new WordList(scanFile.nextLine().substring(1));	
-							} else {
-								addWordFromString(_mistakes, line);
-							}
-						}
-					} else if (line.startsWith("%")) {
-						if (!var.getName().equals("mistakes")) {
-							_wordLists.add(var);
-						}
-						var = new WordList(line.substring(1));
-					} else {
-						addWordFromString(var, line);
-					}
-				}
-			}
-		} else {
-			try {
-				file.createNewFile();
-			} catch(IOException e) {
-				e.printStackTrace();
-			}
-		}
-
-	}
-
-	/** This method converts a line from a file into a format suitable
-	 *  for creating a word object, then adds it to a wordlist.
-	 */
-	private void addWordFromString(WordList var, String line) {
-		String[] wordInfo = line.split("\\s+");	
-		if (wordInfo.length > 3) {
-			String word = "";
-			for (int i = 0; i < wordInfo.length - 2; i++) {
-				word = word + " " + wordInfo[i];
-			}
-			String[] twoWords = {word, wordInfo[wordInfo.length - 2], wordInfo[wordInfo.length - 1]};
-			wordInfo = twoWords;
-		}
-
-
-		var.add(new Word(wordInfo[0], 
-				Integer.parseInt(wordInfo[1]), 
-				Integer.parseInt(wordInfo[2])));
-	}
 
 	/** This method checks whether there is already a WordList object
 	 *  in the _wordlists field with a name matching the String parameter. 
@@ -173,50 +105,7 @@ public class Topic {
 		return _mistakes;
 	}
 	
-	/** This method overwrites the data stored in the file .Data.txt by deleting
-	 *  the file and creating a new one. 
-	 */
-	/*
-	public void overrideData() {
-		File data = new File(".Data.txt");
-		data.delete();
-		try {
-			data.createNewFile();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		readFromFile();
-	}
-
-	*/
-	/** This method writes the data stored in this object to the file .Data.txt
-	 */
-	/*
-	public void writeDataToFile() {
-		overrideData();
-
-		String fileName = ".Data.txt";
-
-		if (_currentLevel == null) {
-			_currentLevel = "Level 1";
-		}
-
-		addToFile(_currentLevel, fileName);
-
-		addToFile("%" + _mistakes.getName(), fileName);
-		for (Word var : _mistakes.returnCopyOfList()) {
-			addToFile(var.toString(), fileName);
-		}
-
-		for (WordList var : _wordLists) {
-			addToFile("%" + var.getName(), fileName);
-			for (Word var1 : var.returnCopyOfList()) {
-				addToFile(var1.toString(), fileName);
-			}
-		}
-
-	}
-
+	
 	/**This method adds a string on a new line to a file
 	 */
 	private void addToFile(String word, String fileName) {
@@ -259,7 +148,20 @@ public class Topic {
 		return names[0];
 	}
 
+	public void writeToFile(String fileName) {
+		addToFile("@"+_name, fileName);
+		addToFile(_currentLevel, fileName);
+		for (Word var : _mistakes.getWords()) {
+			addToFile(var.toString(), fileName);
+		}
+		for (WordList var : _wordLists) {
+			addToFile("%"+var.getName(), fileName);
+			for (Word var1 : var.getWords()) {
+				addToFile(var1.toString(), fileName);
+			}
+		}
+	}
 
-
+	
 }
 

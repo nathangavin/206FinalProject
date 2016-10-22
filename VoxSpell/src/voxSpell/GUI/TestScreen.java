@@ -4,10 +4,12 @@ import java.awt.event.ActionEvent;
 
 import javax.swing.JFrame;
 
-public class TestScreen extends GUIElement {
+import voxSpell.data.UserData;
 
-	protected TestScreen(JFrame frame) {
-		super(frame);
+public class TestScreen extends UserGUIElement {
+
+	protected TestScreen(JFrame frame, UserData user) {
+		super(frame, user);
 		// TODO Auto-generated constructor stub
 	}
 

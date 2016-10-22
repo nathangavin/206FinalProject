@@ -1,0 +1,9 @@
+package voxSpell.data;
+
+import java.util.ArrayList;
+
+public class Users {
+	
+	private ArrayList<UserData> _users = new ArrayList<UserData>();
+
+}

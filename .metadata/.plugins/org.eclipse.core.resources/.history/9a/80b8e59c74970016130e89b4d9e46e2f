@@ -1,0 +1,17 @@
+package voxSpell.data;
+
+import java.io.File;
+import java.util.ArrayList;
+
+public class Users {
+	
+	private ArrayList<UserData> _users = new ArrayList<UserData>();
+
+	public Users() {
+		File file = new File(".Users.Data");
+		if (file.isFile()) {
+			
+		}
+	}
+	
+}

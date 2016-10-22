@@ -101,5 +101,26 @@ public class WordList {
 		
 		return (overall/previous) -1;
 	}
+	
+	public void addWordFromString(String line) {
+		String[] wordInfo = line.split("\\s+");	
+		if (wordInfo.length > 3) {
+			String word = "";
+			for (int i = 0; i < wordInfo.length - 2; i++) {
+				word = word + " " + wordInfo[i];
+			}
+			String[] twoWords = {word, wordInfo[wordInfo.length - 2], wordInfo[wordInfo.length - 1]};
+			wordInfo = twoWords;
+		}
+
+
+		add(new Word(wordInfo[0], 
+				Integer.parseInt(wordInfo[1]), 
+				Integer.parseInt(wordInfo[2])));
+	}
+	
+	public ArrayList<Word> getWords() {
+		return _list;
+	}
 }
 

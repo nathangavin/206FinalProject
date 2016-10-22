@@ -1,10 +1,13 @@
 package voxSpell.GUI;
 
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+
+import voxSpell.data.Users;
 
 //import GUI.Data.DataStore;
 
@@ -13,13 +16,13 @@ import javax.swing.JPanel;
 public abstract class GUIElement extends JPanel implements ActionListener {
 
 	protected JFrame _GUI;
-	//protected DataStore _data;
 	
-	protected GUIElement(JFrame frame /*, DataStore data */) {
+	protected GUIElement(JFrame frame) {
 		
 		super();
 		_GUI = frame;
-		//_data = data;
+		
+		this.setBackground(new Color(31, 173, 255));
 			
 	}
 	

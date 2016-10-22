@@ -1,0 +1,26 @@
+package voxSpell.data;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+
+public class Users {
+	
+	private ArrayList<UserData> _users = new ArrayList<UserData>();
+
+	public Users() {
+		File file = new File(".Users.Data");
+		if (file.isFile()) {
+			Scanner scanFile = null;
+			
+			scanFile = new Scanner(file);
+		} else {
+			try {
+				file.createNewFile();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	
+}

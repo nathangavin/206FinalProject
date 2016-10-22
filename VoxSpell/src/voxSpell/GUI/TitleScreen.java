@@ -10,19 +10,22 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.border.Border;
 
-public class TitleScreen extends GUIElement {
+import voxSpell.data.Users;
+
+public class TitleScreen extends AdminGUIElement {
 	
 	private JLabel _titlePrimary = new JLabel("Welcome to VoxSpell");
 	private JLabel _titleSecondary = new JLabel("The Spelling Aid");
 	private JButton _login = new JButton("Login to existing user");
 	private JButton _newUser = new JButton("Create new user");
 
-	public TitleScreen(JFrame frame) {
-		super(frame);
+	public TitleScreen(JFrame frame, Users users) {
+		super(frame, users);
 		GridBagLayout layout = new GridBagLayout();
-		layout.columnWidths = new int[] {250, 200, 200, 250};
-		layout.rowHeights = new int[] {200, 50, 30, 200, 100, 120};
+		layout.columnWidths = new int[] {166, 133, 134, 167};
+		layout.rowHeights = new int[] {143, 36, 30, 50 ,77, 78, 86};
 		setLayout(layout);
 		GridBagConstraints c = new GridBagConstraints();
 		c.weightx = 0.5;
@@ -41,14 +44,14 @@ public class TitleScreen extends GUIElement {
 		_titleSecondary.setFont(new Font("Garamond", Font.PLAIN, 20));
 		add(_titleSecondary, c);
 		
-		c.gridy = 3;
+		c.gridy = 5;
 		c.weighty = 0.5;
-		c.gridwidth = 1;
+		c.gridwidth = 2;
 		_login.addActionListener(this);
 		_login.setPreferredSize(new Dimension(200, 80));
 		add(_login, c);
 		
-		c.gridx = 2;
+		c.gridy = 4;
 		_newUser.addActionListener(this);
 		_newUser.setPreferredSize(new Dimension(200, 80));
 		add(_newUser, c);
@@ -61,9 +64,9 @@ public class TitleScreen extends GUIElement {
 		_GUI.getContentPane().removeAll();
 		
 		if (e.getSource().equals(_login)) {
-			_GUI.getContentPane().add(new LoginScreen(_GUI));
+			_GUI.getContentPane().add(new LoginScreen(_GUI, _users));
 		} else {
-			_GUI.getContentPane().add(new NewUser(_GUI));
+			_GUI.getContentPane().add(new NewUser(_GUI, _users));
 		}
 		
 		_GUI.revalidate();

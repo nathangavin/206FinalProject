@@ -1,0 +1,27 @@
+package voxSpell.GUI;
+
+import java.awt.event.ActionEvent;
+
+import javax.swing.JComboBox;
+import javax.swing.JFrame;
+
+import voxSpell.data.Users;
+
+public class LoginScreen extends GUIElement {
+	
+	private JComboBox<String> _userSelector;
+
+	protected LoginScreen(JFrame frame, Users users) {
+		super(frame, users);
+		_userSelector = new JComboBox<String>(_users.getUserNames());
+		
+		
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+}

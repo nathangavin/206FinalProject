@@ -1,6 +1,7 @@
 package voxSpell.GUI;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -13,21 +14,24 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
-public class NewUser extends GUIElement {
+import voxSpell.data.UserData;
+import voxSpell.data.Users;
+
+public class NewUser extends AdminGUIElement {
 	
 	private JLabel _title = new JLabel("New User");
 	private JLabel _name = new JLabel("Username:");
-	private JTextField _input = new JTextField("Enter Username Here    ");
+	private JTextField _input = new JTextField("Enter Username Here ");
 	private JButton _createUser = new JButton("Create User");
 	private JLabel _warning = new JLabel("Please enter a valid username");
 	private JButton _goBack = new JButton("go back");
 
-	public NewUser(JFrame frame) {
-		super(frame);
+	public NewUser(JFrame frame, Users users) {
+		super(frame, users);
 		
 		GridBagLayout layout = new GridBagLayout();
-		layout.columnWidths = new int[] {200, 230, 270, 200};
-		layout.rowHeights = new int[] {170, 40, 50, 50, 30, 30, 40, 290};
+		layout.columnWidths = new int[] {133, 154, 180, 133};
+		layout.rowHeights = new int[] {121, 28, 36, 36, 21, 21, 29, 207};
 		setLayout(layout);
 		GridBagConstraints c = new GridBagConstraints();
 		
@@ -50,15 +54,16 @@ public class NewUser extends GUIElement {
 		c.gridx = 2;
 		c.weightx = 0;
 		c.anchor = c.WEST;
+		_input.setMinimumSize(new Dimension(180, 30));
 		_input.addFocusListener(new FocusListener() {
 			public void focusGained(java.awt.event.FocusEvent evt) {
-				if (_input.getText().equals("Enter Username Here    ")) {
+				if (_input.getText().equals("Enter Username Here ")) {
 					_input.setText("");
 				}
 			}
 			public void focusLost(FocusEvent e) {
 				if (_input.getText().equals("")) {
-					_input.setText("Enter Username Here    ");
+					_input.setText("Enter Username Here ");
 				}
 			}
 		});
@@ -89,16 +94,18 @@ public class NewUser extends GUIElement {
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource().equals(_goBack)) {
 			_GUI.getContentPane().removeAll();
-			_GUI.add(new TitleScreen(_GUI));
+			_GUI.add(new TitleScreen(_GUI, _users));
 			_GUI.revalidate();
 			_GUI.repaint();
 			return;
 		} else if (e.getSource().equals(_createUser)) {
-			if (_input.getText().equals("") || _input.getText().equals("Enter Username Here    ")) {
+			if (_input.getText().equals("") || _input.getText().equals("Enter Username Here ")) {
 				_warning.setVisible(true);
 			} else {
+				UserData user = new UserData(_input.getText());
+				_users.addAUser(user);
 				_GUI.getContentPane().removeAll();
-				_GUI.add(new LoginScreen(_GUI));
+				_GUI.add(new UserMenu(_GUI, user));
 			}
 			_GUI.revalidate();
 			_GUI.repaint();

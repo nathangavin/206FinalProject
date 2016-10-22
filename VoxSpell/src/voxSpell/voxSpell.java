@@ -1,5 +1,6 @@
 package voxSpell;
 
+import java.awt.Color;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
@@ -7,22 +8,24 @@ import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 
 import voxSpell.GUI.TitleScreen;
+import voxSpell.data.Users;
 
 public class voxSpell extends JFrame {
+	
+	private Users _users;
 
 	public voxSpell() {
 		super("VoxSpell - Spelling Aid");
 		
-		
-		//_data = new DataStore();
+		_users = new Users();
 			
-		setSize(900, 700);
+		setSize(600, 500);
 		setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);	
-		add(new TitleScreen(this));
+		add(new TitleScreen(this, _users));
 		
 		addWindowListener(new WindowAdapter() {
 			public void windowClosing(WindowEvent e) {
-				//_data.writeDataToFile();
+				_users.writeToFile();
 				System.exit(0);
 			}
 		});

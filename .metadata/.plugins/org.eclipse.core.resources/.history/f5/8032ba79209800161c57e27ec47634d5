@@ -1,0 +1,32 @@
+package voxSpell.GUI;
+
+import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+
+import voxSpell.data.Users;
+
+//import GUI.Data.DataStore;
+
+
+
+public abstract class GUIElement extends JPanel implements ActionListener {
+
+	protected JFrame _GUI;
+	protected Users _users;
+	
+	protected GUIElement(JFrame frame, Users users) {
+		
+		super();
+		_GUI = frame;
+		_users = users;
+		
+		this.setBackground(new Color(31, 173, 255));
+			
+	}
+	
+
+}
