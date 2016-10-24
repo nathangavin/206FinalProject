@@ -1,0 +1,13 @@
+package voxSpell.GUI;
+
+import java.awt.event.ActionEvent;
+
+public class StatsTopicScreen extends UserGUIElement {
+
+	@Override
+	public void actionPerformed(ActionEvent arg0) {
+		// TODO Auto-generated method stub
+
+	}
+
+}

@@ -16,11 +16,13 @@ import voxSpell.data.Users;
 public abstract class GUIElement extends JPanel implements ActionListener {
 
 	protected JFrame _GUI;
+	protected Users _users;
 	
-	protected GUIElement(JFrame frame) {
+	protected GUIElement(JFrame frame, Users users) {
 		
 		super();
 		_GUI = frame;
+		_users = users;
 		
 		this.setBackground(new Color(31, 173, 255));
 			

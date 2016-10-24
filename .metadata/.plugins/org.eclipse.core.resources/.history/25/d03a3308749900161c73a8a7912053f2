@@ -1,0 +1,39 @@
+package voxSpell.GUI;
+
+import java.awt.GridBagLayout;
+import java.awt.event.ActionEvent;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+
+import voxSpell.data.UserData;
+import voxSpell.data.Users;
+
+public class RewardsScreen extends UserGUIElement {
+
+	private JPanel _previousPanel;
+	
+	private JLabel _title = new JLabel("Rewards");
+	private JButton _playVideo;
+	private JButton _goBack = new JButton("<");
+	
+	
+	protected RewardsScreen(JFrame frame,Users users, UserData user, JPanel previousPanel) {
+		super(frame,users, user);
+		
+		_previousPanel = previousPanel;
+		
+		GridBagLayout layout = new GridBagLayout();
+		setLayout(layout);
+		
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+}

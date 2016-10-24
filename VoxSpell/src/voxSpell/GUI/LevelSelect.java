@@ -4,6 +4,7 @@ import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -15,6 +16,7 @@ import voxSpell.Exceptions.NoSuchTopicException;
 import voxSpell.Exceptions.NoSuchWordListException;
 import voxSpell.data.Topic;
 import voxSpell.data.UserData;
+import voxSpell.data.Users;
 import voxSpell.data.WordList;
 
 public class LevelSelect extends UserGUIElement {
@@ -29,10 +31,11 @@ public class LevelSelect extends UserGUIElement {
 	private JLabel _levelLabel = new JLabel("Levels:");
 	
 	private Topic _topic = null;
+	private boolean _topicSelected = false;
 	
 
-	protected LevelSelect(JFrame frame, UserData user) {
-		super(frame, user);
+	protected LevelSelect(JFrame frame,Users users, UserData user) {
+		super(frame, users,user);
 		
 		_topics = new JComboBox<String>(user.getTopicNames());
 		
@@ -48,6 +51,7 @@ public class LevelSelect extends UserGUIElement {
 		c.gridx = 0;
 		c.gridy = 0;
 		_goBack.addActionListener(this);
+		_goBack.setFont(new Font("Garamond", Font.PLAIN, 20));
 		add(_goBack, c);
 		
 		c.gridy = 1;
@@ -98,15 +102,29 @@ public class LevelSelect extends UserGUIElement {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if (e.getSource().equals(_selectTopic)) {
+		Object source = e.getSource();
+		
+		if (source.equals(_selectTopic)) {
 			try {
 				_topic = _user.getTopic(_topics.getSelectedItem().toString());
 			} catch (NoSuchTopicException e1) {
 				e1.printStackTrace();
 			}
+			_topicSelected = true;
+			remove(_levels);
 			_levels = new JComboBox<String>(_topic.getNamesOfLists());
-		} else if (e.getSource().equals(_selectLevel)) {
-			if (_topic.equals(null)) {
+			_levels.setFont(new Font("Garamond", Font.PLAIN, 20));
+			GridBagConstraints c = new GridBagConstraints();
+			c.gridx = 2;
+			c.gridy = 4;
+			c.weightx = 0.5;
+			c.weighty = 0.5;
+			c.gridwidth = 1;
+			c.anchor = c.WEST;
+			add(_levels, c);
+			
+		} else if (source.equals(_selectLevel)) {
+			if (!_topicSelected) {
 				JOptionPane.showMessageDialog(this, "Please Select a Topic to choose a level from.");
 			} else {
 				WordList list = null;
@@ -116,12 +134,12 @@ public class LevelSelect extends UserGUIElement {
 					e1.printStackTrace();
 				}
 				
-				_GUI.removeAll();
-				_GUI.getContentPane().add(new TestScreen(_GUI, _user, list));
+				_GUI.getContentPane().removeAll();
+				_GUI.getContentPane().add(new TestScreen(_GUI,_users, _user,_topic, list));
 			}
-		} else if (e.getSource().equals(_goBack)) {
-			_GUI.removeAll();
-			_GUI.getContentPane().add(new UserMenu(_GUI, _user));
+		} else {
+			_GUI.getContentPane().removeAll();
+			_GUI.getContentPane().add(new UserMenu(_GUI,_users, _user));
 		}
 		
 		_GUI.revalidate();

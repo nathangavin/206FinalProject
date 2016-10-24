@@ -15,7 +15,6 @@ import voxSpell.data.Users;
 
 public class UserMenu extends UserGUIElement {
 
-	private UserData _user;
 
 	private JLabel _title;
 	private JLabel _score;
@@ -26,9 +25,8 @@ public class UserMenu extends UserGUIElement {
 	private JButton _rewards = new JButton("View Rewards");
 	private JButton _returnToTitle = new JButton("<");
 
-	protected UserMenu(JFrame frame, UserData user) {
-		super(frame, user);
-		_user = user;
+	protected UserMenu(JFrame frame,Users users, UserData user) {
+		super(frame,users, user);
 
 		_title = new JLabel("Welcome, "+_user.getName());
 		_score = new JLabel("Score: "+_user.getScore());
@@ -81,13 +79,17 @@ public class UserMenu extends UserGUIElement {
 		_GUI.getContentPane().removeAll();
 
 		if (source.equals(_quiz)) {
-			_GUI.getContentPane().add(new LevelSelect(_GUI, _user));
+			_GUI.getContentPane().add(new LevelSelect(_GUI,_users, _user));
 		} else if (source.equals(_review)) {
-			//_GUI.getContentPane().add(new TestScreen(_GUI, _users, _data.getMistakes().returnCopyOfList(), true));
+			_GUI.getContentPane().add(new MistakesScreen(_GUI, _users, _user));
 		} else if (source.equals(_stats)) {
-			_GUI.getContentPane().add(new StatsScreen(_GUI, _user));
+			_GUI.getContentPane().add(new StatsTopicScreen(_GUI, _users, _user, this));
 		} else if (source.equals(_returnToTitle)) {
-			_GUI.getContentPane().add(new TitleScreen(_GUI, new Users()));
+			_GUI.getContentPane().add(new TitleScreen(_GUI, _users));
+		} else if (source.equals(_importFile)) {
+			_GUI.getContentPane().add(new ImportScreen(_GUI, _users, _user));
+		} else if (source.equals(_rewards)) {
+			_GUI.getContentPane().add(new RewardsScreen(_GUI, _users, _user, this));
 		}
 
 		_GUI.revalidate();

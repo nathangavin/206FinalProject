@@ -15,11 +15,15 @@ public class UserData {
 
 	private String _name = "";
 	private ArrayList<Topic> _topics = new ArrayList<Topic>();
+	private ArrayList<Integer> _scores = new ArrayList<Integer>();
 	private int _score = 0;
+	private WordList _mistakes = new WordList("mistakes");
+	private String _festivalPath;
 
 	public UserData(String userName) {
 		_name = userName;
 		readFile();
+		writeToFile();
 	}
 
 	public void addTopic(Topic topic) {
@@ -28,6 +32,14 @@ public class UserData {
 
 	public void addToScore(int number) {
 		_score += number;
+	}
+	
+	public void addAScore(int score) {
+		_scores.add(score);
+	}
+	
+	public ArrayList<Integer> getScores() {
+		return _scores;
 	}
 
 	public String getName() {
@@ -38,9 +50,27 @@ public class UserData {
 		_name = name;
 	}
 
+	public void addToMistakes(Word word) { 
+		if (!doesListContainWord(word, _mistakes)) {
+			_mistakes.add(word);
+		}
+	}
 
+	private boolean doesListContainWord(Word word, WordList list) {
+		for (Word var : list.getWords()) {
+			if (var.getWord().equals(word.getWord())) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
 	public int getScore() {
 		return _score;
+	}
+	
+	public WordList getMistakes() {
+		return _mistakes;
 	}
 
 	public Topic getTopic(String topicName) throws NoSuchTopicException {
@@ -67,29 +97,22 @@ public class UserData {
 			if (file.hasNextLine()) {				
 				String score = file.nextLine();
 				_score = Integer.parseInt(score);
-
-				Topic var;
-
-				var = new Topic(file.nextLine().substring(1));
-
-				WordList var1 = null;
-
+				
+				
+				WordList var1 = _mistakes;
+				file.nextLine();
+				
+				Topic var = null;
+				
 				while (file.hasNextLine()) {
 					String line = file.nextLine();
 					if (line.startsWith("@")) {
-						addTopic(var);
 						var = new Topic(line.substring(1));
-					} else if (line.equals("%mistakes")) {
-						var1 = var.getMistakes(); 
-						line = file.nextLine();
-						while (!line.startsWith("%") && !line.startsWith("@")) {
-							var1.addWordFromString(line);
-							line = file.nextLine();
-						}
-						var1 = new WordList(line.substring(1));
+						addTopic(var);
 					} else if (line.startsWith("%")) {
 						var1 = new WordList(line.substring(1));
 						var.addWordList(var1);
+						var1.createScores(file.nextLine());
 					} else {
 						var1.addWordFromString(line);
 					}
@@ -118,12 +141,23 @@ public class UserData {
 			e.printStackTrace();
 		}
 
-		addToFile("hello");
 
 		String scoreString = "" + _score;
 		addToFile(scoreString);
+		addToFile("%mistakes");
+		for (Word var : _mistakes.getWords()) {
+			addToFile(var.toString());
+		}
+		
 		for (Topic var : _topics) {
-			var.writeToFile(fileName);
+			addToFile("@"+var.getName());
+			for (WordList var1 : var.getLists()) {
+				addToFile("%"+var1.getName());
+				addToFile(var1.printScores());
+				for (Word var2 : var1.getWords()) {
+					addToFile(var2.toString());
+				}
+			}
 		}
 	}
 
@@ -148,5 +182,39 @@ public class UserData {
 			names[i] = _topics.get(i).getName();
 		}
 		return names;
+	}
+	
+	private void locateFestival() {
+		
+		File file = new File(".save");
+		try {
+			file.createNewFile();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		ProcessBuilder builder = new ProcessBuilder("/bin/bash", "-c","which festival > '" + file.getAbsolutePath() + "'");
+		try {
+			builder.start();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+			
+		Scanner scan = null;
+		try {
+			scan = new Scanner(file);
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+		String line = scan.nextLine();
+		_festivalPath = line;
+		
+		scan.close();
+		file.delete();
+		
+	}
+	
+	public String getFestival() {
+		return _festivalPath;
 	}
 }

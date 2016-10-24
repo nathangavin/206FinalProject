@@ -1,0 +1,258 @@
+package voxSpell.GUI;
+
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JTextField;
+import javax.swing.SwingWorker;
+
+import voxSpell.data.UserData;
+import voxSpell.data.Users;
+import voxSpell.data.Word;
+import voxSpell.data.WordList;
+
+public class TestScreen extends UserGUIElement {
+
+	private WordList _wordList;
+	private List<Word> _listOfWords = new ArrayList<Word>();
+
+	private JLabel _label = new JLabel("New Spelling Quiz");
+	private JLabel _levelLabel;
+	private JLabel _wordLabel = new JLabel();
+	private JTextField _input = new JTextField("Press enter to submit word");
+	private JButton _speak = new JButton();
+	private JLabel _labelOfStuff = new JLabel("");
+	private JLabel _voiceLabel = new JLabel("Select a voice:");
+	private JComboBox<String> _voiceSelect = new JComboBox<String>(new String[] {"American", "British", "New Zealander"});
+	private JButton _view = new JButton("View Statistics");
+	private JButton _giveUp = new JButton("Give Up");
+	private JLabel _wordValue = new JLabel("Word Value: 10 points");
+	private JLabel _scoreEarned = new JLabel("Points earned: 0");
+	
+	private int _wordNum = 0;
+	private int _score = 0;
+	private int _maxWords = 10;
+	private int _wordScore = 10;
+
+
+	public TestScreen(JFrame frame,Users users, UserData user, WordList list) {
+		super(frame,users, user);
+		_wordList = list;
+		_listOfWords = _wordList.getRandomTen();
+		_levelLabel = new JLabel(_wordList.getName());
+
+		setLayout(new GridBagLayout());
+		GridBagConstraints c = new GridBagConstraints();
+		c.weighty = 0.5;
+
+		c.gridx = 0;
+		c.gridy = 0;
+		c.gridwidth = 3;
+		_label.setFont(new Font("Garamond", Font.PLAIN, 30));
+		add(_label, c);
+
+		c.gridy = 1;
+		c.gridwidth = 1;
+		add(_wordValue, c);
+		
+		c.gridx = 1;
+		add(_levelLabel, c);
+		
+		c.gridx = 2;
+		add(_scoreEarned, c);
+
+		c.gridy = 2;
+		c.gridwidth = 3;
+		_wordLabel.setText("Word 1 of " + _maxWords);
+		add(_wordLabel, c);
+
+		_input.setPreferredSize(new Dimension(300,50));
+		_input.addActionListener(this);
+		_input.addFocusListener(new FocusListener() {
+			public void focusGained(java.awt.event.FocusEvent evt) {
+				if (_input.getText().equals("Press enter to submit word")) {
+					_input.setText("");
+				}
+			}
+			@Override
+			public void focusLost(FocusEvent e) {
+				if (_input.getText().equals("")) {
+					_input.setText("Press enter to submit word");
+				}
+			}
+		});
+
+		c.gridy = 3;
+		c.gridwidth = 2;
+		add(_input, c);
+
+		ImageIcon ico = new ImageIcon("res/SpeakerIcon.png");
+		_speak.setIcon(ico);
+		_speak.addActionListener(this);
+		_speak.setPreferredSize(new Dimension(50,50));
+
+		c.gridwidth = 1;
+		c.gridx = 2;
+		add(_speak, c);
+
+		c.gridy = 4;
+		c.gridx = 0;
+		c.gridwidth = 1;
+		add(_voiceLabel, c);
+
+		c.gridwidth = 2;
+		c.gridx = 1;
+		_voiceSelect.setPreferredSize(new Dimension(150,25));
+		add(_voiceSelect, c);
+
+		c.gridx = 0;
+		c.gridy = 5;
+		c.gridwidth = 3;
+		add(_labelOfStuff, c);
+
+		c.gridy = 6;
+		_view.addActionListener(this);
+		_view.setPreferredSize(new Dimension(150,50));
+		add(_view,c);
+		
+		String speech = "Spell the word... " +_listOfWords.get(_wordNum).getWord();
+		speakWord(speech);
+
+	}
+
+	private void speakWord(final String word) {
+
+		SwingWorker<Void, Void> worker = new SwingWorker<Void, Void>() {
+			protected Void doInBackground() throws Exception {
+
+				String voice = "";
+				if (_voiceSelect.getSelectedItem().equals("American")) {
+					voice = "(voice_kal_diphone)";
+				} else if (_voiceSelect.getSelectedItem().equals("British")) {
+					voice = "(voice_rab_diphone)";
+				} else if (_voiceSelect.getSelectedItem().equals("New Zealander")) {
+					voice = "(voice_akl_nz_jdt_diphone)";
+				}
+
+				ProcessBuilder builder = new ProcessBuilder("festival", voice, "(SayText \"" + word + "\")");
+
+				try {
+					builder.start();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}				
+
+				return null;
+
+			}
+
+		};
+		worker.execute();
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+
+		if (e.getSource().equals(_speak)) {
+			String speech = "Spell the word... " +_listOfWords.get(_wordNum).getWord();
+			speakWord(speech);
+		} else if (e.getSource().equals(_view)) {
+			_GUI.getContentPane().add(new StatsScreen(_GUI, _users, _user));
+			_GUI.revalidate();
+			_GUI.repaint();
+		} else if (e.getSource().equals(_input)) {
+
+			String input = _input.getText().trim();
+			input = input.toLowerCase();
+			if (!isAlpha(input)) {
+				JOptionPane.showMessageDialog(this, "Please only enter characters between a-z.");
+				return;
+			}
+			String word = _listOfWords.get(_wordNum).getWord().toLowerCase();
+			_labelOfStuff.setText("");
+
+
+			if (input.equals(word)) {
+
+				_listOfWords.get(_wordNum).increment(0);
+				_listOfWords.get(_wordNum).increment(1);
+
+
+				_wordNum++;
+				_score += _wordScore;
+				_wordScore = 10;
+
+				_labelOfStuff.setText("CORRECT!");
+				_input.setText("");
+				int num = _wordNum + 1;
+				_wordLabel.setText("Word " + num + " of " + _maxWords);
+				if (_wordNum+1 == _maxWords) {
+					_GUI.getContentPane().removeAll();
+					_GUI.getContentPane().add(new CompletionScreen(_GUI,_users, _user, _score));
+
+					_GUI.revalidate();
+					_GUI.repaint();
+
+					return;
+
+				}
+			} else {
+				_listOfWords.get(_wordNum).increment(0);
+				if (_wordScore > 1) {
+					_wordScore--;
+				}
+				_labelOfStuff.setText("Incorrect, try again..");
+				_user.getMistakes().add(_listOfWords.get(_wordNum));
+			}
+			
+			String speech = "Spell the word... " +_listOfWords.get(_wordNum).getWord();
+			speakWord(speech);
+
+		} else if (e.getSource().equals(_giveUp)) {
+			if (_wordNum+1 == _maxWords) {
+				_GUI.getContentPane().removeAll();
+				_GUI.getContentPane().add(new CompletionScreen(_GUI,_users, _user, _score));
+
+				_GUI.revalidate();
+				_GUI.repaint();
+
+				return;
+
+			}
+			_wordNum++;
+			_input.setText("");
+			int num = _wordNum + 1;
+			_wordLabel.setText("Word " + num + " of " + _maxWords);
+			
+			String speech = "Spell the word... " +_listOfWords.get(_wordNum).getWord();
+			speakWord(speech);
+		}
+
+	}
+
+	private boolean isAlpha(String word) {
+		char[] chars = word.toCharArray();
+
+		for (char c : chars) {
+			if (!Character.isLetter(c)) {
+				return false;
+			}
+		}
+		return true;
+	}
+
+}

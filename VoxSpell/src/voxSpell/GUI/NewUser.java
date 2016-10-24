@@ -14,10 +14,12 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
+import voxSpell.Exceptions.WrongFileFormatException;
+import voxSpell.data.Topic;
 import voxSpell.data.UserData;
 import voxSpell.data.Users;
 
-public class NewUser extends AdminGUIElement {
+public class NewUser extends GUIElement {
 	
 	private JLabel _title = new JLabel("New User");
 	private JLabel _name = new JLabel("Username:");
@@ -100,7 +102,7 @@ public class NewUser extends AdminGUIElement {
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource().equals(_goBack)) {
 			_GUI.getContentPane().removeAll();
-			_GUI.add(new TitleScreen(_GUI, _users));
+			_GUI.getContentPane().add(new TitleScreen(_GUI, _users));
 			_GUI.revalidate();
 			_GUI.repaint();
 			return;
@@ -109,10 +111,17 @@ public class NewUser extends AdminGUIElement {
 				_warning.setVisible(true);
 			} else {
 				UserData user = new UserData(_input.getText());
-				Topic topic = new Topic();
 				_users.addAUser(user);
+				Topic defaultTopic = null;
+				try {
+					defaultTopic = new Topic();
+				} catch (WrongFileFormatException e1) {
+					e1.printStackTrace();
+				}
+				user.addTopic(defaultTopic);
+				_users.writeToFile();
 				_GUI.getContentPane().removeAll();
-				_GUI.add(new UserMenu(_GUI, user));
+				_GUI.getContentPane().add(new UserMenu(_GUI,_users, user));
 			}
 			_GUI.revalidate();
 			_GUI.repaint();

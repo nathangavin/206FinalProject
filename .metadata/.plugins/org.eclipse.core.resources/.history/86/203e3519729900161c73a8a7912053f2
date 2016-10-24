@@ -1,0 +1,25 @@
+package voxSpell.GUI;
+
+import java.awt.event.ActionEvent;
+
+import javax.swing.JFrame;
+
+import voxSpell.data.UserData;
+import voxSpell.data.Users;
+
+public class RewardsScreen extends UserGUIElement {
+
+	private JLabel _title = new JLabel("Rewards");
+	
+	
+	protected RewardsScreen(JFrame frame,Users users, UserData user) {
+		super(frame,users, user);
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+}

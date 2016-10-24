@@ -1,0 +1,92 @@
+package voxSpell.GUI;
+
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.event.ActionEvent;
+import java.io.File;
+
+import javax.swing.JButton;
+import javax.swing.JFileChooser;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JTextField;
+
+import voxSpell.data.Topic;
+import voxSpell.data.UserData;
+import voxSpell.data.Users;
+
+public class ImportScreen extends UserGUIElement {
+	
+	private JButton _openFileChooser = new JButton("Choose File");
+	private JButton _createTopic = new JButton("Create Topic");
+	private JButton _goBack = new JButton("<");
+	
+	private JTextField _name = new JTextField("Enter Name Here");
+	private JFileChooser _fileChooser = new JFileChooser();
+	private JLabel _title = new JLabel("Import New Topic");
+	
+	private Topic _selectedTopic;
+
+	protected ImportScreen(JFrame frame,Users users, UserData user) {
+		super(frame,users, user);
+		
+		GridBagLayout layout = new GridBagLayout();
+		layout.columnWidths = new int[] {60, 240, 300};
+		layout.rowHeights = new int[] {60, 190, 125, 125};
+		setLayout(layout);
+		
+		GridBagConstraints c = new GridBagConstraints();
+		c.weightx = 0.5;
+		c.weighty = 0.5;
+		
+		c.gridx = 0;
+		c.gridy = 0;
+		_goBack.setFont(new Font("Garamond", Font.PLAIN, 30));
+		_goBack.addActionListener(this);
+		add(_goBack, c);
+		
+		c.gridy = 1;
+		c.gridwidth = 3;
+		_title.setFont(new Font("Garamond", Font.PLAIN, 30));
+		add(_title,c);
+		
+		
+		c.gridy = 2;
+		c.gridwidth = 2;
+		_name.setFont(new Font("Garamond", Font.PLAIN, 20));
+		_name.setMinimumSize(new Dimension(230, 60));
+		add(_name, c);
+		
+		c.gridx = 2;
+		c.gridwidth = 1;
+		_openFileChooser.setFont(new Font("Garamond", Font.PLAIN, 20));
+		_openFileChooser.addActionListener(this);
+		add(_openFileChooser, c);
+		
+		c.gridx = 0;
+		c.gridy = 3;
+		c.gridwidth = 3;
+		_createTopic.setFont(new Font("Garamond", Font.PLAIN, 20));
+		_createTopic.addActionListener(this);
+		add(_createTopic, c);
+		
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		if (e.getSource().equals(_openFileChooser)) {
+			int val = _fileChooser.showOpenDialog(this);
+			if (val == JFileChooser.APPROVE_OPTION) {
+				File f = _fileChooser.getSelectedFile();
+				String path = f.getAbsolutePath();
+				_selectedTopic = new Topic(path);
+			}
+		} else if (e.getSource().equals(_createTopic)) {
+			
+		} else if (e.getSource().equals(_goBack)) {
+			
+		}
+	}
+}

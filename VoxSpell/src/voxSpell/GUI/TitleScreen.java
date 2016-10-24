@@ -14,7 +14,7 @@ import javax.swing.border.Border;
 
 import voxSpell.data.Users;
 
-public class TitleScreen extends AdminGUIElement {
+public class TitleScreen extends GUIElement {
 	
 	private JLabel _titlePrimary = new JLabel("Welcome to VoxSpell");
 	private JLabel _titleSecondary = new JLabel("The Spelling Aid");

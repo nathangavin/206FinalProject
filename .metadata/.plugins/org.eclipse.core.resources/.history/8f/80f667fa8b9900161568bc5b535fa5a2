@@ -1,0 +1,29 @@
+package voxSpell.GUI;
+
+import java.awt.event.ActionEvent;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+
+import voxSpell.data.UserData;
+import voxSpell.data.Users;
+
+public class StatsTopicScreen extends UserGUIElement {
+
+	private JPanel _previousScreen;
+	
+	protected StatsTopicScreen(JFrame frame, Users users, UserData user, JPanel previousScreen) {
+		super(frame, users, user);
+		
+		_previousScreen = previousScreen;
+		
+		// TODO Auto-generated constructor stub
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent arg0) {
+		// TODO Auto-generated method stub
+
+	}
+
+}

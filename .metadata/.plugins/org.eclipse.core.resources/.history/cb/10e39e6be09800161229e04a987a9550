@@ -1,0 +1,8 @@
+package voxSpell.festival;
+
+public class Festival {
+
+	private String _whatToSay;
+	private Stirng _voice;
+	
+}

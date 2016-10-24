@@ -54,6 +54,7 @@ public class Users {
 
 		for (UserData x : _users) {
 			addToFile(x.getName());
+			x.writeToFile();
 		}
 	}
 

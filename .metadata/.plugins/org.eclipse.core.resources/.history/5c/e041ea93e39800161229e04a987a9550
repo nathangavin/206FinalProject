@@ -1,0 +1,34 @@
+package voxSpell.festival;
+
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
+public class Festival {
+
+	private String _whatToSay;
+	private String _voice;
+	
+	public Festival() {
+	}
+	
+	public void sayText(String whatToSay, String voice) {
+		_whatToSay = whatToSay;
+		_voice = voice;
+		
+		ExecutorService thread = Executors.newSingleThreadExecutor();
+		
+		thread.execute(new Runnable()  {
+
+			@Override
+			public void run() {
+				ArrayList<String> 
+				
+			}
+			
+		
+		
+		
+		});
+	}
+	
+}

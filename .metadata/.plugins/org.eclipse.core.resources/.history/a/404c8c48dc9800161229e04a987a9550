@@ -1,0 +1,28 @@
+package voxSpell.GUI;
+
+import java.awt.event.ActionEvent;
+
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+
+import voxSpell.data.UserData;
+import voxSpell.data.Users;
+
+public class CompletionScreen extends UserGUIElement {
+
+	private JLabel _title = new Jlabel("Test Completed!");
+	private JLabel _scoreEarned;
+	private JLabel _scoreTotal;
+	
+	
+	protected CompletionScreen(JFrame frame,Users users, UserData user) {
+		super(frame, users, user);
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+}

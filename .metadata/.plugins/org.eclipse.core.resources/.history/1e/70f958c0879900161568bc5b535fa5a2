@@ -1,0 +1,37 @@
+package voxSpell.GUI;
+
+import java.awt.event.ActionEvent;
+
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+
+import voxSpell.data.UserData;
+import voxSpell.data.Users;
+
+public class StatsScreen extends UserGUIElement {
+
+	private JPanel _previousScreen;
+	private JLabel _title = new JLabel("Statistics");
+	
+	private JComboBox<String> _chooseStats;
+	
+	private JButton _selectStats = new JButton("Select");
+	private JButton _goBack = new JButton("<");
+	
+	
+	
+	protected StatsScreen(JFrame frame, Users users,UserData user, JPanel previousScreen) {
+		super(frame, users,user);
+		_previousScreen = previousScreen;
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+}

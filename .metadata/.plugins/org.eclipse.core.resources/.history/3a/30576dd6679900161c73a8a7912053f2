@@ -1,0 +1,171 @@
+package voxSpell.GUI;
+
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
+import java.io.IOException;
+
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JTextField;
+import javax.swing.SwingWorker;
+
+import voxSpell.data.UserData;
+import voxSpell.data.Users;
+import voxSpell.data.WordList;
+
+public class MistakesScreen extends UserGUIElement {
+	
+	private WordList _mistakes;
+	
+	private JComboBox<String> _words;
+	private JLabel _title = new JLabel("Words you have found difficult");
+	private JButton _removeWord = new JButton("Remove Word");
+	private JTextField _spellingArea = new JTextField("Spell Word Here  ");
+	private JButton _hearWord = new JButton();
+	private JLabel _advice = new JLabel("");
+	private JButton _goBack = new JButton("<");
+	private JComboBox<String> _voiceSelect = new JComboBox<String>(new String[] {"American", "British", "New Zealander"});
+	
+
+	protected MistakesScreen(JFrame frame, Users users, UserData user) {
+		super(frame, users, user);
+		
+		_mistakes = _user.getMistakes();
+		String[] words = new String[_mistakes.getListLength()];
+		
+		if (words.length == 0) {
+			JOptionPane.showMessageDialog(this, "You have not given up on any words, returning to main menu...");
+			_GUI.getContentPane().removeAll();
+			_GUI.getContentPane().add(new UserMenu(_GUI, _users, _user));
+			_GUI.revalidate();
+			_GUI.repaint();
+			return;
+		}
+			
+		for (int i = 0; i < words.length; i++) {
+			words[i] = _mistakes.getWords().get(i).getWord();
+		}
+		
+		_words = new JComboBox<String>(words);
+		
+		GridBagLayout layout = new GridBagLayout();
+		layout.columnWidths = new int[] {60, 240, 300};
+		layout.rowHeights = new int[] {60, 88, 88, 88, 88, 88};
+		setLayout(layout);
+		
+		GridBagConstraints c = new GridBagConstraints();
+		c.weightx = 0.5;
+		c.weighty = 0.5;
+		
+		c.gridx = 0;
+		c.gridy = 0;
+		_goBack.addActionListener(this);
+		_goBack.setPreferredSize(new Dimension(50, 60));
+		_goBack.setFont(new Font("Garamond", Font.PLAIN, 20));
+		add(_goBack, c);
+		
+		c.gridy = 1;
+		c.gridwidth = 3;
+		_title.setFont(new Font("Garamond", Font.PLAIN, 30));
+		add(_title,c);
+		
+		c.gridy = 2;
+		_words.setFont(new Font("Garamond", Font.PLAIN, 20));
+		_words.addActionListener(this);
+		add(_words, c);
+		
+		c.gridy = 3;
+		c.gridwidth = 3;
+		_spellingArea.setFont(new Font("Garamond", Font.PLAIN, 20));
+		_spellingArea.setMinimumSize(new Dimension(250, 50));
+		_spellingArea.addFocusListener(new FocusListener() {
+			public void focusGained(java.awt.event.FocusEvent evt) {
+				if (_spellingArea.getText().equals("Spell Word Here  ")) {
+					_spellingArea.setText("");
+				}
+			}
+			public void focusLost(FocusEvent e) {
+				if (_spellingArea.getText().equals("")) {
+					_spellingArea.setText("Spell Word Here  ");
+				}
+			}
+		});
+		add(_spellingArea, c);
+		
+		c.gridx = 2;
+		c.gridwidth = 1;
+		ImageIcon ico = new ImageIcon("res/SpeakerIcon.png");
+		_hearWord.setIcon(ico);
+		_hearWord.addActionListener(this);
+		_hearWord.setPreferredSize(new Dimension(50,50));
+		add(_hearWord,c);
+		
+		c.gridx = 0;
+		c.gridy = 4;
+		c.gridwidth = 3;
+		c.anchor = c.CENTER;
+		_advice.setFont(new Font("Garamond", Font.PLAIN, 17));
+		add(_advice, c);
+		
+		c.gridy = 5;
+		_removeWord.addActionListener(this);
+		_removeWord.setFont(new Font("Garamond", Font.PLAIN, 20));
+		add(_removeWord,c);
+		
+		
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		if (e.getSource().equals(_words)) {
+			
+		} else if (e.getSource().equals(_removeWord)) {
+			
+		} else if (e.getSource().equals(_hearWord)) {
+			
+		} else if (e.getSource().equals(_goBack)) {
+			
+		}
+
+	}
+
+	
+	private void speakWord(final String word) {
+
+		SwingWorker<Void, Void> worker = new SwingWorker<Void, Void>() {
+			protected Void doInBackground() throws Exception {
+
+				String voice = "";
+				if (_voiceSelect.getSelectedItem().equals("American")) {
+					voice = "(voice_kal_diphone)";
+				} else if (_voiceSelect.getSelectedItem().equals("British")) {
+					voice = "(voice_rab_diphone)";
+				} else if (_voiceSelect.getSelectedItem().equals("New Zealander")) {
+					voice = "(voice_akl_nz_jdt_diphone)";
+				}
+
+				ProcessBuilder builder = new ProcessBuilder("/usr/bin/festival", voice, "(SayText \"" + word + "\")");
+
+				try {
+					builder.start();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}				
+
+				return null;
+
+			}
+
+		};
+		worker.execute();
+	}
+}

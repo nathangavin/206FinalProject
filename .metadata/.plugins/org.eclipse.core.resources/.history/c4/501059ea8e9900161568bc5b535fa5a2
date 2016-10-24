@@ -1,0 +1,104 @@
+package voxSpell.GUI;
+
+import java.awt.Font;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.event.ActionEvent;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+
+import voxSpell.data.UserData;
+import voxSpell.data.Users;
+
+public class CompletionScreen extends UserGUIElement {
+
+	private JLabel _title = new JLabel("Test Completed!");
+	private JLabel _scoreEarned;
+	private JLabel _scoreTotal;
+	private JButton _newTest = new JButton("Take Another Test");
+	private JButton _backToMain = new JButton("Main Menu");
+	private JButton _rewards = new JButton("Rewards");
+	private JButton _gotoStats = new JButton("Statistics");
+	
+	private int _earnedScore;
+	private int _userFinalScore;
+	private Topic _topic;
+	
+	
+	protected CompletionScreen(JFrame frame,Users users, UserData user, Topic topic, int earnedScore) {
+		super(frame, users, user);
+		_earnedScore = earnedScore;
+		user.addToScore(_earnedScore);
+		user.addAScore(_earnedScore);
+		_userFinalScore = _user.getScore();
+		_scoreEarned = new JLabel("Score Earned: "+_earnedScore);
+		_scoreTotal = new JLabel("Total Score: "+_userFinalScore);
+		
+		
+		GridBagLayout layout = new GridBagLayout();
+		setLayout(layout);
+		
+		GridBagConstraints c = new GridBagConstraints();
+		c.weightx = 0.5;
+		c.weighty = 0.5;
+		
+		c.gridx = 0;
+		c.gridy = 0;
+		c.gridwidth = 2;
+		_title.setFont(new Font("Garamond", Font.PLAIN, 30));
+		add(_title, c);
+		
+		c.gridy = 1;
+		_scoreEarned.setFont(new Font("Garamond", Font.PLAIN, 20));
+		add(_scoreEarned, c);
+		
+		c.gridy = 2;
+		_scoreTotal.setFont(new Font("Garamond", Font.PLAIN, 15));
+		add(_scoreTotal,c);
+		
+		c.gridy = 3;
+		c.gridwidth = 1;
+		_newTest.addActionListener(this);
+		_newTest.setFont(new Font("Garamond", Font.PLAIN, 20));
+		add(_newTest, c);
+		
+		c.gridx = 1;
+		_rewards.addActionListener(this);
+		_rewards.setFont(new Font("Garamond", Font.PLAIN, 20));
+		add(_rewards, c);
+		
+		c.gridx = 0;
+		c.gridy = 4;
+		_gotoStats.addActionListener(this);
+		_gotoStats.setFont(new Font("Garamond", Font.PLAIN, 20));
+		add(_gotoStats, c);
+		
+		c.gridx = 1;
+		_backToMain.addActionListener(this);
+		_backToMain.setFont(new Font("Garamond", Font.PLAIN, 20));
+		add(_backToMain, c);
+		
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		
+		_GUI.getContentPane().removeAll();
+		
+		if (e.getSource().equals(_newTest)) {
+			_GUI.getContentPane().add(new LevelSelect(_GUI, _users, _user));
+		} else if (e.getSource().equals(_backToMain)) {
+			_GUI.getContentPane().add(new UserMenu(_GUI, _users, _user));
+		} else if (e.getSource().equals(_rewards)) {
+			_GUI.getContentPane().add(new RewardsScreen(_GUI, _users, _user, this));
+		} else if (e.getSource().equals(_gotoStats)) {
+			_GUI.getContentPane().add(new StatsScreen(_GUI, _users, _user));
+		}
+		
+		_GUI.revalidate();
+		_GUI.repaint();
+	}
+
+}

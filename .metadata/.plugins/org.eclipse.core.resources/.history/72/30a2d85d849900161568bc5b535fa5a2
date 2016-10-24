@@ -1,0 +1,23 @@
+package voxSpell.GUI;
+
+import java.awt.event.ActionEvent;
+
+import javax.swing.JFrame;
+
+import voxSpell.data.UserData;
+import voxSpell.data.Users;
+
+public class StatsScreen extends UserGUIElement {
+
+	protected StatsScreen(JFrame frame, Users users,UserData user) {
+		super(frame, users,user);
+		// TODO Auto-generated constructor stub
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+}

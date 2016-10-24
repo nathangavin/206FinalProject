@@ -4,11 +4,13 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import voxSpell.Exceptions.NoSuchWordException;
+
 public class WordList {
 
-	private String _name;
-	private double _recentScore;
-	private ArrayList<Double> _scores = new ArrayList<Double>();
+	private String _name = "";
+	private ArrayList<Integer> _scores = new ArrayList<Integer>();
+	private int _recentScore;
 	private ArrayList<Word> _list = new ArrayList<Word>();
 
 	public WordList(String name) {
@@ -53,55 +55,6 @@ public class WordList {
 		return false;
 	}
 	
-	public void addToScore(int score) {
-		_scores.add(new Double(_recentScore));
-		_recentScore = (double)score;
-	}
-
-	public double getPreviousScore() {
-		double total = 0;
-		double amount = 0;
-		
-		if (_scores.isEmpty()) {
-			return 0;
-		}
-		
-		for (Double var : _scores) {
-			amount++;
-			total = total + var.doubleValue();
-		}
-		
-		return total/amount;
-	}
-	
-	public double getOverallScore() {
-		double total = _recentScore;
-		double amount = 1;
-		
-		if (_scores.isEmpty()) {
-			return 0;
-		}
-		
-		for (Double var : _scores) {
-			amount++;
-			total = total + var.doubleValue();
-		}
-		return total/amount;
-	}
-	
-	public double getProgression() {
-		double overall = getOverallScore();
-		double previous = getPreviousScore();
-		
-		if (overall == 0 && previous == 0) {
-			return 0;
-		} else if (previous == 0) {
-			return 1;
-		}
-		
-		return (overall/previous) -1;
-	}
-	
 	public void addWordFromString(String line) {
 		String[] wordInfo = line.split("\\s+");	
 		if (wordInfo.length > 3) {
@@ -121,6 +74,78 @@ public class WordList {
 	
 	public ArrayList<Word> getWords() {
 		return _list;
+	}
+	
+	public Word getWord(String word) throws NoSuchWordException {
+		for (Word var : _list) {
+			if (var.getWord().equals(word)) {
+				return var;
+			}
+		}
+		
+		throw new NoSuchWordException();
+	}
+	
+	public void addToScore(int score) {
+		_scores.add(new Integer(_recentScore));
+		_recentScore = score;
+	}
+
+	public double getPreviousScore() {
+		double total = 0;
+		double amount = 0;
+		
+		if (_scores.isEmpty()) {
+			return 0;
+		}
+		
+		for (int var : _scores) {
+			amount++;
+			total = total + var;
+		}
+		
+		return total/amount;
+	}
+	
+	public double getOverallScore() {
+		double total = _recentScore;
+		double amount = 1;
+		
+		
+		for (int var : _scores) {
+			amount++;
+			total = total + var;
+		}
+		return total/amount;
+	}
+	
+	public double getProgression() {
+		double overall = getOverallScore();
+		double previous = getPreviousScore();
+		
+		if (overall == 0 && previous == 0) {
+			return 0;
+		} else if (previous == 0) {
+			return 1;
+		}
+		
+		return (overall/previous) -1;
+	}
+	
+	public String printScores() {
+		String scores = "";
+		for (int var : _scores) {
+			scores = scores + var + " "; 
+		}
+		
+		return scores;
+	}
+	
+	public void createScores(String scores) {
+		String[] scoreValues = scores.split("\\s+");
+		for (String var : scoreValues) {
+			_scores.add(Integer.parseInt(var));
+		}
 	}
 }
 

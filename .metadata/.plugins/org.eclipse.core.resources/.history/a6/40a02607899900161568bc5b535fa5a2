@@ -1,0 +1,88 @@
+package voxSpell.data;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+import voxSpell.Exceptions.NoSuchWordException;
+
+public class WordList {
+
+	private String _name = "";
+	private double _recentScore;
+	private ArrayList<Word> _list = new ArrayList<Word>();
+
+	public WordList(String name) {
+		_name = name;
+	}
+	
+	public void add(Word word) {
+		if (!_list.contains(word)) {
+			_list.add(word);
+		}
+	}
+	
+	public void remove(Word word) {
+		_list.remove(word);
+	}
+	
+	public String getName() {
+		return _name;
+	}
+	
+	public int getListLength() {
+		return _list.size();
+	}
+	
+	public List<Word> getRandomTen() {
+		Collections.shuffle(_list);
+		return _list.subList(0, 10);
+	}
+	
+	public ArrayList<Word> returnCopyOfList() {
+		ArrayList<Word> list = new ArrayList<Word>();
+		list.addAll(_list);
+		return list;
+	}
+	
+	public boolean containsWord(String word) {
+		for (Word var : _list) {
+			if (var.getWord().equals(word)) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	public void addWordFromString(String line) {
+		String[] wordInfo = line.split("\\s+");	
+		if (wordInfo.length > 3) {
+			String word = "";
+			for (int i = 0; i < wordInfo.length - 2; i++) {
+				word = word + " " + wordInfo[i];
+			}
+			String[] twoWords = {word, wordInfo[wordInfo.length - 2], wordInfo[wordInfo.length - 1]};
+			wordInfo = twoWords;
+		}
+
+
+		add(new Word(wordInfo[0], 
+				Integer.parseInt(wordInfo[1]), 
+				Integer.parseInt(wordInfo[2])));
+	}
+	
+	public ArrayList<Word> getWords() {
+		return _list;
+	}
+	
+	public Word getWord(String word) throws NoSuchWordException {
+		for (Word var : _list) {
+			if (var.getWord().equals(word)) {
+				return var;
+			}
+		}
+		
+		throw new NoSuchWordException();
+	}
+}
+

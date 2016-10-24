@@ -1,0 +1,58 @@
+package voxSpell.GUI;
+
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.event.ActionEvent;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+
+import voxSpell.data.UserData;
+import voxSpell.data.Users;
+
+public class CompletionScreen extends UserGUIElement {
+
+	private JLabel _title = new JLabel("Test Completed!");
+	private JLabel _scoreEarned;
+	private JLabel _scoreTotal;
+	private JButton _newTest = new JButton("Take Another Test");
+	private JButton _backToMain = new JButton("Main Menu");
+	private JButton _rewards = new JButton("Rewards");
+	private JButton _gotoStats = new JButton("Statistics");
+	
+	private int _earnedScore;
+	private int _userFinalScore;
+	
+	
+	protected CompletionScreen(JFrame frame,Users users, UserData user, int earnedScore) {
+		super(frame, users, user);
+		_earnedScore = earnedScore;
+		_userFinalScore = _user.getScore() + _earnedScore;
+		_scoreEarned = new JLabel("Score Earned: "+_earnedScore);
+		_scoreTotal = new JLabel("Total Score: "+_userFinalScore);
+		
+		GridBagLayout layout = new GridBagLayout();
+		setLayout(layout);
+		
+		GridBagConstraints c = new GridBagConstraints();
+		c.weightx = 0.5;
+		c.weighty = 0.5;
+		
+		
+		
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		if (e.getSource().equals(_newTest)) {
+			
+		} else if (e.getSource().equals(_backToMain)) {
+			
+		} else if (e.getSource().equals(_rewards)) {
+			
+		}
+		
+	}
+
+}

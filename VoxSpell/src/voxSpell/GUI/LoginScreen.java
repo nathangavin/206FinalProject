@@ -14,7 +14,7 @@ import voxSpell.Exceptions.NoSuchUserException;
 import voxSpell.data.UserData;
 import voxSpell.data.Users;
 
-public class LoginScreen extends AdminGUIElement {
+public class LoginScreen extends GUIElement {
 	
 	private JComboBox<String> _userSelector;
 	private JButton _goBack = new JButton("<");
@@ -63,7 +63,7 @@ public class LoginScreen extends AdminGUIElement {
 	public void actionPerformed(ActionEvent e) {
 		_GUI.getContentPane().removeAll();
 		if (e.getSource().equals(_goBack)) {
-			_GUI.add(new TitleScreen(_GUI, _users));
+			_GUI.getContentPane().add(new TitleScreen(_GUI, _users));
 		} else {
 			String user = _userSelector.getSelectedItem().toString();
 			UserData userData = null;
@@ -72,7 +72,7 @@ public class LoginScreen extends AdminGUIElement {
 			} catch (NoSuchUserException e1) {
 				e1.printStackTrace();
 			}
-			_GUI.add(new UserMenu(_GUI, userData));
+			_GUI.getContentPane().add(new UserMenu(_GUI,_users, userData));
 		}
 		_GUI.revalidate();
 		_GUI.repaint();
